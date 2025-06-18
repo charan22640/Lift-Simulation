@@ -110,8 +110,23 @@ header h1 {
     padding: 10px;
     border: 2px solid #ddd;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 18px;
     width: 150px;
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    background: linear-gradient(to bottom, #f9f9f9, #e9e9e9);
+}
+
+#malfunction-lift-id:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
+
+.malfunction-controls label {
+    font-weight: bold;
+    margin-right: 10px;
 }
 
 #disable-lift-btn {
@@ -264,11 +279,31 @@ header h1 {
     background: linear-gradient(45deg, #2d3436, #636e72);
     border: 3px solid #555;
     border-radius: 8px;
-    transition: bottom 2s ease-in-out;
+    transition: bottom 2s cubic-bezier(0.33, 1, 0.68, 1);
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.lift.moving-up {
+    animation: liftBounceUp 2s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.lift.moving-down {
+    animation: liftBounceDown 2s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+@keyframes liftBounceUp {
+    0% { transform: translateY(0); }
+    10% { transform: translateY(5px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes liftBounceDown {
+    0% { transform: translateY(0); }
+    10% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
 }
 
 .lift.disabled {
@@ -297,7 +332,7 @@ header h1 {
     width: 50%;
     height: 100%;
     background: linear-gradient(90deg, #74b9ff, #0984e3);
-    transition: transform 2.5s ease-in-out;
+    transition: transform 2.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .lift-door.left {
@@ -323,13 +358,81 @@ header h1 {
     top: 5px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    color: #333;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 12px;
+    background: linear-gradient(45deg, #f39c12, #e74c3c);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 10;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    border: 2px solid white;
+}
+
+/* Direction and Floor indicators */
+.lift-indicators {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.direction-indicator {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
     font-weight: bold;
 }
+
+.direction-indicator.up {
+    color: #00b894;
+}
+
+.direction-indicator.down {
+    color: #e17055;
+}
+
+.floor-indicator {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 4px;
+    padding: 3px 10px;
+    color: #ffeaa7;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Add visual feedback to moving lifts */
+.lift-shaft {
+    position: relative;
+    overflow: visible;
+}
+
+.floor-arrival-indicator {
+    position: absolute;
+    width: 100%;
+    height: 8px;
+    bottom: 0;
+    background: rgba(0, 184, 148, 0.3);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1s ease-in-out;
+    z-index: 1;
+}
+
+.floor-arrival-indicator.arriving {
+    transform: scaleX(1);
+}
+
+
 
 /* Status Panel */
 .status-panel {
@@ -351,11 +454,19 @@ header h1 {
     gap: 15px;
 }
 
+/* Enhanced Status Cards */
 .lift-status-card {
     background: #f8f9fa;
     padding: 15px;
     border-radius: 10px;
     border-left: 4px solid #74b9ff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.lift-status-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
 }
 
 .lift-status-card.disabled {
@@ -364,13 +475,91 @@ header h1 {
 }
 
 .lift-status-card h4 {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
-.lift-status-card p {
-    margin: 5px 0;
-    color: #666;
+.status-badge {
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-weight: normal;
+    color: white;
+}
+
+.status-moving {
+    background: #74b9ff;
+}
+
+.status-idle {
+    background: #95a5a6;
+}
+
+.status-door-open {
+    background: #00b894;
+}
+
+.status-malfunction {
+    background: #d63031;
+}
+
+.status-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 10px;
+}
+
+.status-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.floor-number-badge {
+    display: inline-block;
+    background: #2d3436;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.malfunction-warning {
+    background-color: rgba(214, 48, 49, 0.1);
+    border-left: 3px solid #d63031;
+    padding: 8px;
+    margin-top: 10px;
+    color: #d63031;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.lift-number-indicator {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    margin-right: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    font-size: 16px;
 }
 
 /* Responsive Design */
@@ -408,3 +597,36 @@ header h1 {
         width: 60px;
     }
 }
+
+.lift-shaft::before {
+    content: attr(data-lift-id);
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 1;
+}
+
+.lift-shaft-label {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 5;
+}
+

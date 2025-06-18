@@ -21,15 +21,13 @@
             <div class="input-group">
                 <label for="lifts">Number of Lifts:</label>
                 <input type="number" id="lifts" min="1" max="5" value="2">
-            </div>
-            <button id="generate-btn">Generate Simulation</button>
-        </div>
-
-        <!-- Malfunction Controls -->
+            </div>            <button id="generate-btn">Generate Simulation</button>
+        </div><!-- Malfunction Controls -->
         <div class="malfunction-panel">
             <h3>Lift Malfunction Controls</h3>
             <div class="malfunction-controls">
-                <input type="number" id="malfunction-lift-id" min="1" placeholder="Lift Number">
+                <label for="malfunction-lift-id">Lift #:</label>
+                <input type="number" id="malfunction-lift-id" min="1" placeholder="Enter Number">
                 <button id="disable-lift-btn">Disable Lift</button>
                 <button id="enable-all-lifts-btn">Enable All Lifts</button>
             </div>
