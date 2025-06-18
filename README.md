@@ -41,8 +41,6 @@ Create a web app where you can simulate lift mechanics for a client
    - Enhanced status display with visual cues
 
 
-![
-  
-](image-1.png)
+![alt text](image-1.png)
 ![alt text](image-3.png)
 ![alt text](image.png)
