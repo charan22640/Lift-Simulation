@@ -1,8 +1,8 @@
 # Lift-Simulation
 Create a web app where you can simulate lift mechanics for a client
 
-# UI Example
-![Lift Simulation Example](Lift-Simulation-Example.png "Lift Simulation Example")
+
+
 
 # Features
   1. Configure the number of floors (2-10) and lifts (1-5)
@@ -40,7 +40,7 @@ Create a web app where you can simulate lift mechanics for a client
    - Floor and direction indicators inside lifts
    - Enhanced status display with visual cues
 
-
+# UI 
 ![alt text](image-1.png)
 ![alt text](image-3.png)
 ![alt text](image.png)
